@@ -1,0 +1,51 @@
+:wq      - Write and quit
+:q!      - quit and dont save
+:w       - save
+h        - move cursor left
+j        - move cursor down
+k        - move cursor up
+l        - move cursor right
+i        - insert mode
+esc      - command mode or forget a command
+dd       - deletes a line : D deletes line ahead of cursor 
+G        - bottom of page
+gg       - top of page
+{        - skips block of code up
+}        - skips block of code down
+xj       - skips x lines of code down : xk skips x lines of code up
+
+NOTE   on just about any code, you can place a number prior to a command to do it X amount of times
+
+u        - undo an action
+Ctrl+R   - redo an action
+.        - does an action again
+yy       - copies a line
+p        - pastes below {capital Pastes above} dd will act as the cut command
+V        - enter visual mode to select a large amount of lines: V selects entire block
+o        - insert a line
+
+NOTE     - you can hit escape immediately after to exit insert mode
+
+w        - go to next word : W skips punctuation
+b        - take you back a word : B skips punctuation
+:x       - takes you x line of code
+0        - takes to the very beginning of the line
+^        - takes to the very beginning of the code of the line : 0w does the same thing
+$        - takes to the end of the line
+fX       - takes to next X character
+tX       - takes to one cursor before X character
+%        - switches between brackets
+d%       - delete between brackets
+cw       - deletes a word so you can change it
+C        - deletes all items in line ahead of cursor and drops you into insert mode
+dtx      - deletes everything between the cursor and X
+*        - toggle between instances of whatever word or function your cursor is over
+;        - go to next instance of whatever letter the cursor is hovering over
+zz       - center your cursor
+a        - go to insert mode and go to the right once : A goes to the very end of the line
+x        - deletes letter in your cursor : adding a number to the end will delete that many ahead
+~        - will toggle the letter the cursor hovers over upper or lower case : add numbers for x amount of letters
+.        - basically works as a copy and paste with commands you did
+r        - replace a letter
+Shift+>> - indents
+

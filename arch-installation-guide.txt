@@ -1,0 +1,84 @@
+Arch Linux installation guide
+
+# efivar -l
+
+SETUP INTERNET
+
+Wifi:
+#iwctl
+#device list | this lists all your devices that can be used to connect to a network
+#station device get-networks | lists all available networks
+#station device connect SSID | in this instance device could be wlan0 and SSID is the network name
+#ping www.yahoo.com | make sure you're up and running
+
+SETUP PARTITIONS
+#hdparm -i /dev/xxx | gives details about particular device
+#gdisk /dev/sdb | prompts for formatting 
+	on the command 'x' for expert mode and then 'z' for zap and then agree to all
+#cgdisk /dev/xxx | opens prompt for partions
+	PARTITION LIST:
+		default | 1024MiB | EF00 | boot
+		default | 16GiB | 8200 | swap
+		default | 35GiB | 8300 | root
+		default | ALL   | 8300 | home
+
+Write and Exit
+
+MOUNT PARTITIONS
+# mkfs.fat -F32 /dev/xxx | format boot drive
+# mkswap /dev/xxx | format swap
+# swapon /dev/xxx | turn swap on
+# mkfs.ext4 /dev/xxx | format root and home
+
+# mount /dev/xxx /mnt | mount root partition to /mnt 
+# mkdir /mnt/boot
+# mkdir /mnt/home
+# mount /dev/xxx /mnt/boot | mount boot partition to boot directory
+# mount /dev/xxx /mnt/home | mount home partition to home directory
+
+OPTIONAL SETUP MIRROR LIST
+# cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
+# pacman -S pacman-contrib
+# rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist | this will clean out and save the top 6 mirrors
+
+INSTALL EVERYTHING
+# pacstrap -i /mnt  base base-devel linux linux-headers | basically installs linux
+# genfstab -U -p /mnt >> /mnt/etc/fstab
+# arch-chroot /mnt
+# sudo pacman -Sy
+# sudo pacman -S nano bash-completion
+# nano /etc/locale.gen | ctrl+w en_US.UTF-8 UTF-8
+# locale-gen
+# echo LANG=en_US.UTF-8 > /etc/locale.conf
+# export LANG=en_US.UTF-8
+# ls /usr/share/zoneinfo
+# ln -s /usr/share/zoneinfo/US/Mountain > /etc/localtime
+# hwclock --systohc --utc
+# echo {systemName} > /etc/hostname
+# nano /etc/pacman.conf | enable multilib
+# systemctl enable fstrim.timer
+# pacman -Sy
+# passwd | setup root password
+# useradd -m -g users -G wheel,storage,power -s /bin/bash name
+# passwd name 
+# EDITOR=nano visudo | uncomment %wheel all and add Defaults rootpw
+# mount -t efivarfs efivarfs /sys/firmware/efi/efivars 
+# bootctl install
+# nano /boot/loader/entries/default.conf | 
+	title NAME
+	linux /vmlinuz-linux
+	initrd /initramfs-linux.img
+# pacman -S intel-ucode |amd-ucode for amd drivers
+# nano /boot/loader/entries/default.conf
+	title NAME
+	linux /vmlinuz-linux
+	initrd /intel-ucode.img
+	initrd /initramfs-linux.img
+# echo "options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/xxx) rw" >> /boot/loader/entries/default.conf | root or 3rd partition
+# pacman -S dhcpcd networkmanager
+# systemctl enable dhcpcd@device.service | device is wlan0 or eno2
+# systemctl enable NetworkManager.service
+
+NVIDIA GRAPHICS
+# pacman -S linux-headers nvidia-dkms nvidia-utils opencl-nvidia libglvnd lib32-libglvnd lib32-nvidia-utils
+	 lib32-opencl-nvidia nvidia-settings

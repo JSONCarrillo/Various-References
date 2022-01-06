@@ -1,0 +1,31 @@
+# Basic Git Commands
+
+git init : turns directory into repository
+git add {file name} : adds file to staging to prepare for a commit to branch
+	git add . : adds all modified files to the staging
+git status : shows changes to be committed
+git commit -m "your message" : commit changes to the branch and add a message
+
+# Branch Commands
+
+git checkout -b {name of branch} : creates a new branch with the name given
+	git checkout master : go back to master repository
+git merge {branch name} : use when in a branch and want to rebase code with another branch
+
+# Remote Repository
+
+git remote add origin {repository link) : links remote and local repository
+git push -u origin master : push your master branch to repository
+	NOTE: after executing of this command, on further executions only 'git push' is required
+
+# Global Config 
+
+git config --global user.name "name" 
+git config --global user.email "your email"
+
+
+# More...
+
+git pull origin master : pulls master branch from remote origin
+
+tuesdayjc539

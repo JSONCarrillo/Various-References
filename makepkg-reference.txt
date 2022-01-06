@@ -1,0 +1,4 @@
+1. git clone 
+2. cd into directory
+3. makepkg -s
+4. sudo pacman -U *.tar.gz
